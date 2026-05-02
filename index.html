@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G2 Technology — Projeto Shaver · Fluxo de Caixa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════════════ */
+:root {
+  --c-bg:       #0d0d0b;
+  --c-surface:  #141412;
+  --c-card:     #1a1a17;
+  --c-card2:    #1f1f1c;
+  --c-border:   #2a2a26;
+  --c-border2:  #333330;
+
+  --c-text:     #e8e6df;
+  --c-muted:    #888880;
+  --c-dim:      #555550;
+
+  --c-green:    #22c98a;
+  --c-green2:   #16a871;
+  --c-red:      #e05c35;
+  --c-amber:    #e6a020;
+  --c-blue:     #4a9eff;
+  --c-purple:   #9f87f5;
+
+  --c-green-bg: rgba(34,201,138,.08);
+  --c-red-bg:   rgba(224,92,53,.08);
+  --c-amber-bg: rgba(230,160,32,.08);
+  --c-blue-bg:  rgba(74,158,255,.08);
+
+  --r:  6px;
+  --r2: 10px;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+input[type=number] { -moz-appearance: textfield; }
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════════ */
+.page { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.header {
+  border-bottom: 1px solid var(--c-border);
+  padding: 20px 20px 18px;
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.header-logo {
+  width: 32px; height: 32px; border-radius: 7px;
+  background: linear-gradient(135deg, var(--c-blue) 0%, var(--c-purple) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: #fff;
+}
+.header-title { font-size: 13px; font-weight: 500; color: var(--c-text); }
+.header-sub { font-size: 11px; color: var(--c-muted); margin-top: 1px; }
+.header-badge {
+  font-family: var(--font-mono); font-size: 10px; color: var(--c-dim);
+  border: 1px solid var(--c-border); border-radius: 4px; padding: 3px 8px;
+}
+
+/* Section label */
+.slabel {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 400;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--c-dim);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.slabel::after { content:''; flex:1; height:1px; background:var(--c-border); }
+.slabel-hint { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 11px; color: var(--c-dim); }
+
+/* ── INPUTS ── */
+.section { padding: 28px 20px 0; max-width: 960px; margin: 0 auto; }
+.inputs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 28px; }
+.inp-card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r2);
+  padding: 14px 16px 12px;
+  transition: border-color .15s;
+}
+.inp-card:focus-within { border-color: var(--c-border2); }
+.inp-label { font-size: 11px; color: var(--c-muted); margin-bottom: 10px; display: block; line-height: 1.3; }
+.inp-row { display: flex; align-items: center; gap: 5px; margin-bottom: 10px; }
+.inp-pfx, .inp-sfx { font-family: var(--font-mono); font-size: 12px; color: var(--c-dim); }
+.inp-field {
+  flex: 1; min-width: 0;
+  background: var(--c-card2);
+  border: 1px solid var(--c-border);
+  border-radius: 5px;
+  padding: 5px 9px;
+  font-family: var(--font-mono); font-size: 14px; font-weight: 400;
+  color: var(--c-text);
+  text-align: right;
+  transition: border-color .15s, background .15s;
+}
+.inp-field:focus { outline: none; border-color: var(--c-blue); background: var(--c-surface); }
+input[type=range] {
+  width: 100%; height: 3px;
+  -webkit-appearance: none; appearance: none;
+  background: var(--c-border2); border-radius: 99px;
+  outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--c-blue);
+  box-shadow: 0 0 0 3px rgba(74,158,255,.15);
+  transition: box-shadow .15s;
+}
+input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,158,255,.25); }
+.inp-note { font-size: 10px; color: var(--c-dim); margin-top: 6px; }
+
+/* ── COST SPLIT ── */
+.cost-split {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r2);
+  padding: 14px 16px;
+  grid-column: 1 / -1;
+}
+.cost-split-title { font-size: 11px; color: var(--c-muted); margin-bottom: 10px; }
+.cost-split-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cost-item { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 180px; }
+.cost-item label { font-size: 11px; color: var(--c-muted); white-space: nowrap; }
+.cost-sep { color: var(--c-border2); font-size: 18px; line-height: 1; }
+.cost-total { font-family: var(--font-mono); font-size: 13px; color: var(--c-text); white-space: nowrap; }
+.cost-total span { color: var(--c-blue); }
+
+/* ── ALERTS ── */
+.alerts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.alert {
+  border-radius: var(--r);
+  padding: 10px 14px;
+  font-size: 12px; line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 9px;
+}
+.alert-icon { flex-shrink: 0; margin-top: 1px; font-size: 13px; }
+.alert.warn  { background: var(--c-amber-bg); border: 1px solid rgba(230,160,32,.25); color: #d4921a; }
+.alert.crit  { background: var(--c-red-bg);   border: 1px solid rgba(224,92,53,.25);  color: #c85030; }
+.alert.ok    { background: var(--c-green-bg); border: 1px solid rgba(34,201,138,.2);  color: #1aab78; }
+
+/* ── METRICS GRID ── */
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-bottom: 28px; }
+.metric-card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r2);
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+}
+.metric-card::before {
+  content: ''; position: absolute; inset: 0;
+  opacity: 0; transition: opacity .2s;
+}
+.metric-card.pos::before { background: var(--c-green-bg); }
+.metric-card.neg::before { background: var(--c-red-bg); }
+.metric-card.warn::before { background: var(--c-amber-bg); }
+.metric-card.blu::before  { background: var(--c-blue-bg); }
+.metric-card:hover::before { opacity: 1; }
+.m-label { font-size: 10px; color: var(--c-muted); line-height: 1.3; margin-bottom: 6px; position: relative; }
+.m-value { font-family: var(--font-mono); font-size: 20px; font-weight: 400; line-height: 1.1; position: relative; }
+.m-sub   { font-size: 10px; color: var(--c-muted); margin-top: 3px; position: relative; }
+.m-value.pos { color: var(--c-green); }
+.m-value.neg { color: var(--c-red); }
+.m-value.warn { color: var(--c-amber); }
+.m-value.blu  { color: var(--c-blue); }
+.m-value.neu  { color: var(--c-text); }
+
+/* ── TIMELINE ── */
+.timeline { display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; }
+.phase-row { display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: start; }
+.phase-range { font-family: var(--font-mono); font-size: 10px; color: var(--c-dim); text-align: right; padding-top: 3px; }
+.phase-body {}
+.phase-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+.phase-name { font-size: 12px; font-weight: 500; color: var(--c-text); }
+.phase-edit { display: flex; align-items: center; gap: 3px; }
+.phase-days-input {
+  width: 46px; font-family: var(--font-mono); font-size: 12px;
+  background: var(--c-card2); border: 1px solid var(--c-border);
+  border-radius: 4px; padding: 2px 6px; color: var(--c-text);
+  text-align: center; transition: border-color .15s;
+}
+.phase-days-input:focus { outline: none; border-color: var(--c-blue); }
+.phase-d-label { font-size: 11px; color: var(--c-dim); }
+.bar-track { background: var(--c-card2); border-radius: 3px; height: 6px; position: relative; margin-bottom: 3px; }
+.bar-fill { height: 6px; border-radius: 3px; position: absolute; top: 0; transition: left .2s, width .2s; }
+.phase-note { font-size: 10px; color: var(--c-dim); }
+
+/* ── CHART ── */
+.chart-container {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r2);
+  padding: 18px 18px 12px;
+  margin-bottom: 24px;
+}
+.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+.chart-title { font-size: 12px; font-weight: 500; color: var(--c-muted); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; }
+.litem { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--c-dim); }
+.ldot { width: 8px; height: 8px; border-radius: 2px; }
+.chart-wrap { position: relative; width: 100%; height: 220px; }
+
+/* ── BUTTONS ── */
+.btns-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  font-family: var(--font-body); font-size: 12px;
+  border-radius: var(--r);
+  padding: 9px 16px;
+  cursor: pointer; transition: all .15s;
+  display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none;
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--c-border);
+  color: var(--c-muted);
+}
+.btn-ghost:hover { background: var(--c-card); border-color: var(--c-border2); color: var(--c-text); }
+.btn-primary {
+  background: var(--c-blue); border: none; color: #fff;
+}
+.btn-primary:hover { opacity: .85; }
+.btn-ok { background: var(--c-green2); border: none; color: #fff; }
+.btn-ok:hover { opacity: .85; }
+
+/* ── MODAL ── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+  z-index: 1000; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.overlay.open { display: flex; }
+.modal-box {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 24px;
+  width: min(580px, 100%);
+  max-height: 85vh; overflow-y: auto;
+}
+.modal-title { font-size: 15px; font-weight: 600; color: var(--c-text); margin-bottom: 6px; }
+.modal-desc { font-size: 12px; color: var(--c-muted); margin-bottom: 14px; line-height: 1.6; }
+.modal-desc a { color: var(--c-blue); }
+.prompt-box {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r);
+  padding: 14px;
+  font-family: var(--font-mono); font-size: 11.5px; line-height: 1.8;
+  color: var(--c-text);
+  white-space: pre-wrap;
+  max-height: 200px; overflow-y: auto;
+  margin-bottom: 14px;
+}
+.modal-foot { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.copy-ok { font-size: 12px; color: var(--c-green); display: none; }
+</style>
+</head>
+<body>
+
+<!-- ───────── HEADER ───────── -->
+<div class="header">
+  <div class="header-brand">
+    <div class="header-logo">G2</div>
+    <div>
+      <div class="header-title">Fluxo de Caixa — Projeto Shaver</div>
+      <div class="header-sub">G2 Technology and Business, LLC · Amazon EUA</div>
+    </div>
+  </div>
+  <div class="header-badge">v4.0</div>
+</div>
+
+<!-- ───────── INPUTS ───────── -->
+<div class="section" style="padding-top:28px">
+  <div class="slabel">Parâmetros do projeto</div>
+
+  <div class="inputs-grid">
+
+    <!-- FOB -->
+    <div class="inp-card">
+      <label class="inp-label" for="fob-n">Custo do Pedido (FOB China)</label>
+      <div class="inp-row">
+        <span class="inp-pfx">$</span>
+        <input type="number" class="inp-field" id="fob-n" min="500" max="500000" step="100" value="35000" oninput="onN('fob')">
+      </div>
+      <input type="range" id="fob-r" min="500" max="100000" step="100" value="35000" oninput="onR('fob')">
+      <div class="inp-note">Valor pago ao fornecedor — sem logística</div>
+    </div>
+
+    <!-- Custos Operacionais -->
+    <div class="inp-card">
+      <label class="inp-label" for="ops-n">Custos Operacionais (Logística)</label>
+      <div class="inp-row">
+        <span class="inp-pfx">$</span>
+        <input type="number" class="inp-field" id="ops-n" min="0" max="500000" step="50" value="5000" oninput="onN('ops')">
+      </div>
+      <input type="range" id="ops-r" min="0" max="30000" step="50" value="5000" oninput="onR('ops')">
+      <div class="inp-note">Frete, customs, Red Stag, taxas</div>
+    </div>
+
+    <!-- Preço Amazon -->
+    <div class="inp-card">
+      <label class="inp-label" for="price-n">Preço de Venda Amazon (por unit)</label>
+      <div class="inp-row">
+        <span class="inp-pfx">$</span>
+        <input type="number" class="inp-field" id="price-n" min="5" max="2000" step="0.50" value="45.00" oninput="onN('price')">
+      </div>
+      <input type="range" id="price-r" min="5" max="200" step="0.50" value="45" oninput="onR('price')">
+      <div class="inp-note">Listing price — antes das taxas</div>
+    </div>
+
+    <!-- Unidades -->
+    <div class="inp-card">
+      <label class="inp-label" for="units-n">Unidades no Pedido</label>
+      <div class="inp-row">
+        <input type="number" class="inp-field" id="units-n" min="50" max="100000" step="50" value="2000" oninput="onN('units')">
+        <span class="inp-sfx">un.</span>
+      </div>
+      <input type="range" id="units-r" min="50" max="10000" step="50" value="2000" oninput="onR('units')">
+      <div class="inp-note">Volume inicial do pedido</div>
+    </div>
+
+    <!-- Vendas mensais -->
+    <div class="inp-card">
+      <label class="inp-label" for="sales-n">Vendas Mensais Estimadas</label>
+      <div class="inp-row">
+        <input type="number" class="inp-field" id="sales-n" min="1" max="50000" step="5" value="40" oninput="onN('sales')">
+        <span class="inp-sfx">un./mês</span>
+      </div>
+      <input type="range" id="sales-r" min="5" max="1000" step="5" value="40" oninput="onR('sales')">
+      <div class="inp-note">Velocidade de sell-through</div>
+    </div>
+
+    <!-- Taxa FBA -->
+    <div class="inp-card">
+      <label class="inp-label" for="fba-n">Taxa FBA (por unidade)</label>
+      <div class="inp-row">
+        <span class="inp-pfx">$</span>
+        <input type="number" class="inp-field" id="fba-n" min="0" max="100" step="0.10" value="4.50" oninput="onN('fba')">
+      </div>
+      <input type="range" id="fba-r" min="0" max="20" step="0.10" value="4.50" oninput="onR('fba')">
+      <div class="inp-note">Fulfillment by Amazon fee</div>
+    </div>
+
+  </div><!-- /inputs-grid -->
+
+  <!-- CUSTO TOTAL DISPLAY -->
+  <div class="cost-split" style="margin-bottom:10px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+    <span style="font-size:11px;color:var(--c-muted)">Investimento Total Landed =</span>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--c-dim)">FOB <span id="split-fob" style="color:var(--c-text)">$35,000.00</span></span>
+    <span style="color:var(--c-border2)">+</span>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--c-dim)">Operacional <span id="split-ops" style="color:var(--c-text)">$5,000.00</span></span>
+    <span style="color:var(--c-border2)">=</span>
+    <span style="font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-red)" id="split-total">$40,000.00</span>
+  </div>
+
+  <!-- ALERTS -->
+  <div class="alerts" id="alerts"></div>
+</div>
+
+<!-- ───────── METRICS ───────── -->
+<div class="section" style="padding-top:0">
+  <div class="slabel">Resumo financeiro</div>
+  <div class="metrics-grid" id="metrics"></div>
+</div>
+
+<!-- ───────── TIMELINE ───────── -->
+<div class="section">
+  <div class="slabel">Timeline do ciclo de caixa <span class="slabel-hint">— edite os dias diretamente</span></div>
+  <div class="timeline" id="timeline"></div>
+</div>
+
+<!-- ───────── CHART ───────── -->
+<div class="section">
+  <div class="chart-container">
+    <div class="chart-header">
+      <div class="chart-title">FLUXO DE CAIXA ACUMULADO (SEMANAS)</div>
+      <div class="legend">
+        <span class="litem"><span class="ldot" style="background:var(--c-red)"></span>Saldo negativo</span>
+        <span class="litem"><span class="ldot" style="background:var(--c-green)"></span>Saldo positivo</span>
+        <span class="litem"><span class="ldot" style="background:var(--c-blue);border-radius:50%"></span>Curva acumulada</span>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="cfChart"></canvas></div>
+  </div>
+
+  <div class="btns-row">
+    <button class="btn btn-ghost" onclick="handleBtn('risk')">↗ Analisar riscos desse cenário</button>
+    <button class="btn btn-ghost" onclick="handleBtn('roi')">↗ Calcular ROI e break-even</button>
+  </div>
+</div>
+
+<!-- ───────── MODAL ───────── -->
+<div class="overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title">Prompt gerado</div>
+    <div class="modal-desc">Copie o prompt abaixo e cole no <a href="https://claude.ai" target="_blank">Claude.ai</a> para obter a análise completa com todos os dados do cenário atual.</div>
+    <div class="prompt-box" id="modal-prompt"></div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" onclick="copyPrompt()">Copiar prompt</button>
+      <a href="https://claude.ai" target="_blank" class="btn btn-ghost">Abrir Claude.ai ↗</a>
+      <button class="btn btn-ghost" onclick="closeModal()">Fechar</button>
+      <span class="copy-ok" id="copy-ok">✓ Copiado!</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════ */
+const S = { fob:35000, ops:5000, price:45.00, units:2000, sales:40, fba:4.50 };
+
+const PHASES = [
+  { label:'Produção + QC',      days:25, color:'#9f87f5', note:'Fabricação e inspeção na China' },
+  { label:'Frete marítimo',     days:30, color:'#22c98a', note:'China → EUA (marítimo)' },
+  { label:'Customs + Red Stag', days:10, color:'#4a9eff', note:'Desembaraço + recebimento WH' },
+  { label:'Amazon inbound',     days:7,  color:'#e6a020', note:'Check-in FBA + listing ativo' },
+  { label:'Primeiras vendas',   days:14, color:'#888880', note:'Acumulando histórico' },
+  { label:'Reserva Amazon',     days:14, color:'#e05c35', note:'Período de retenção' },
+  { label:'1º repasse',         days:5,  color:'#22c98a', note:'Disbursement na conta bancária' },
+];
+
+const totalDays = () => PHASES.reduce((a,p) => a + p.days, 0);
+
+/* ═══════════════════════════════════════════════════════════
+   FORMAT
+═══════════════════════════════════════════════════════════ */
+function fmtMoney(v, dec=2){
+  return '$' + v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function fmtMoneyK(v){
+  if(Math.abs(v) >= 1000) return '$' + (v/1000).toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,',') + 'k';
+  return fmtMoney(v);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INPUT SYNC
+═══════════════════════════════════════════════════════════ */
+function onN(k){
+  const v = parseFloat(document.getElementById(k+'-n').value);
+  if(isNaN(v) || v < 0) return;
+  S[k] = v;
+  const r = document.getElementById(k+'-r');
+  r.value = Math.min(v, parseFloat(r.max));
+  calc();
+}
+function onR(k){
+  const v = parseFloat(document.getElementById(k+'-r').value);
+  S[k] = v;
+  document.getElementById(k+'-n').value = v;
+  calc();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PHASE EDIT
+═══════════════════════════════════════════════════════════ */
+function onPhase(i, v){
+  const n = parseInt(v);
+  if(!isNaN(n) && n >= 1){ PHASES[i].days = n; calc(); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN CALC
+═══════════════════════════════════════════════════════════ */
+let chart = null;
+
+function calc(){
+  const { fob, ops, price, units, sales, fba } = S;
+
+  // Core financials
+  const totalInvested = fob + ops;
+  const cpuLanded     = totalInvested / units;
+  const amzFee        = price * 0.15;
+  const marginUnit    = price - cpuLanded - amzFee - fba;
+  const marginPct     = (marginUnit / price) * 100;
+  const revenueMonth  = sales * price;
+  const profitMonth   = sales * marginUnit;
+  const stockDuration = sales > 0 ? units / sales : Infinity; // months
+  const breakEvenMonths = profitMonth > 0 ? totalInvested / profitMonth : Infinity;
+
+  // Breakeven week in chart
+  const td = totalDays();
+
+  // ── Split display
+  document.getElementById('split-fob').textContent   = fmtMoney(fob);
+  document.getElementById('split-ops').textContent   = fmtMoney(ops);
+  document.getElementById('split-total').textContent = fmtMoney(totalInvested);
+
+  // ── Alerts
+  const alerts = [];
+  if(marginPct < 15){
+    alerts.push({ type:'crit', icon:'⛔', text:`Margem líquida de ${marginPct.toFixed(1)}% está abaixo de 15% — inviável para operar na Amazon com sustentabilidade. Revise o FOB ou aumente o preço de venda.` });
+  } else if(marginPct < 25){
+    alerts.push({ type:'warn', icon:'⚠', text:`Margem de ${marginPct.toFixed(1)}% está na zona de atenção (abaixo de 25%). Pequenas variações de custo ou preço podem comprometer a operação.` });
+  }
+  if(isFinite(breakEvenMonths) && isFinite(stockDuration) && breakEvenMonths >= stockDuration * 0.85){
+    alerts.push({ type:'crit', icon:'🚨', text:`Risco crítico de caixa: o break-even do estoque (${breakEvenMonths.toFixed(1)} meses) se aproxima ou ultrapassa a duração do estoque (${stockDuration.toFixed(1)} meses). Você pode ficar sem capital para reabastecer antes de recuperar o investimento.` });
+  }
+  if(alerts.length === 0){
+    alerts.push({ type:'ok', icon:'✓', text:`Margem de ${marginPct.toFixed(1)}% e break-even em ${isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1):'—'} meses. Cenário dentro dos parâmetros saudáveis.` });
+  }
+  document.getElementById('alerts').innerHTML = alerts.map(a =>
+    `<div class="alert ${a.type}"><span class="alert-icon">${a.icon}</span><span>${a.text}</span></div>`
+  ).join('');
+
+  // ── Metrics
+  const mdata = [
+    { label:'Investimento total landed',  val:fmtMoney(totalInvested),         cls: 'neg',  sub: `FOB + Operacional` },
+    { label:'Custo por unidade (landed)', val:fmtMoney(cpuLanded),             cls: 'neu',  sub: `${units.toLocaleString()} un.` },
+    { label:'Margem líq. / unidade',      val:`${fmtMoney(marginUnit)} (${marginPct.toFixed(1)}%)`, cls: marginPct>=25?'pos':marginPct>=15?'warn':'neg', sub: `Após fees Amazon + FBA` },
+    { label:'Comissão Amazon (referral)', val:fmtMoney(amzFee),                cls: 'neu',  sub: `15% sobre $${price.toFixed(2)}` },
+    { label:'Taxa FBA / unidade',         val:fmtMoney(fba),                   cls: 'neu',  sub: `Fulfillment fee` },
+    { label:'Receita mensal estimada',    val:fmtMoney(revenueMonth),          cls: 'pos',  sub: `${sales} un. × $${price.toFixed(2)}` },
+    { label:'Lucro mensal estimado',      val:fmtMoney(profitMonth),           cls: profitMonth>0?'pos':'neg', sub: `Após todos os custos` },
+    { label:'Break-even do estoque',      val:isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1)+' meses':'N/A', cls: isFinite(breakEvenMonths)&&breakEvenMonths<=6?'pos':isFinite(breakEvenMonths)&&breakEvenMonths<=12?'warn':'neg', sub: `Para recuperar ${fmtMoneyK(totalInvested)}` },
+    { label:'Duração do estoque',         val:isFinite(stockDuration)?stockDuration.toFixed(1)+' meses':'∞', cls: (isFinite(breakEvenMonths)&&isFinite(stockDuration)&&breakEvenMonths>=stockDuration*.85)?'warn':'blu', sub: `${units} un. ÷ ${sales} un./mês` },
+    { label:'1º repasse estimado',        val:fmtMoney(Math.max(0, sales*0.5*Math.max(0,price-amzFee-fba))), cls:'pos', sub:`Após ${td} dias de ciclo` },
+    { label:'Ciclo total de caixa',       val:td+' dias',                      cls:'blu',   sub:`Da produção ao repasse` },
+    { label:'1ª reposição necessária em', val:isFinite(stockDuration)?`mês ${Math.max(1,Math.round(stockDuration*0.8))}`:'—', cls:'warn', sub:`Antes de zerar estoque` },
+  ];
+  const mcard = (m, i) => {
+    const cmap = {pos:'pos',neg:'neg',warn:'warn',blu:'blu',neu:''};
+    return `<div class="metric-card ${m.cls}" style="animation-delay:${i*0.03}s">
+      <div class="m-label">${m.label}</div>
+      <div class="m-value ${m.cls}">${m.val}</div>
+      ${m.sub?`<div class="m-sub">${m.sub}</div>`:''}
+    </div>`;
+  };
+  document.getElementById('metrics').innerHTML = mdata.map(mcard).join('');
+
+  // ── Timeline
+  updateTimeline();
+
+  // ── Chart
+  drawChart(totalInvested, marginUnit, sales, td);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TIMELINE BUILD / UPDATE
+═══════════════════════════════════════════════════════════ */
+function buildTimeline(){
+  const td = totalDays(); let acc = 0;
+  document.getElementById('timeline').innerHTML = PHASES.map((p, i) => {
+    const s = acc; acc += p.days;
+    const lp = ((s/td)*100).toFixed(3);
+    const wp = ((p.days/td)*100).toFixed(3);
+    return `<div class="phase-row">
+      <div class="phase-range" id="pr-${i}">${s}–${acc}d</div>
+      <div class="phase-body">
+        <div class="phase-head">
+          <span class="phase-name">${p.label}</span>
+          <div class="phase-edit">
+            <input type="number" class="phase-days-input" id="pd-${i}" value="${p.days}" min="1" max="365" oninput="onPhase(${i}, this.value)">
+            <span class="phase-d-label">dias</span>
+          </div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" id="bf-${i}" style="left:${lp}%;width:${wp}%;background:${p.color}"></div></div>
+        <div class="phase-note">${p.note}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateTimeline(){
+  const td = totalDays(); let acc = 0;
+  PHASES.forEach((p, i) => {
+    const s = acc; acc += p.days;
+    const pr = document.getElementById('pr-'+i);
+    const bf = document.getElementById('bf-'+i);
+    const pi = document.getElementById('pd-'+i);
+    if(pr) pr.textContent = `${s}–${acc}d`;
+    if(bf){ bf.style.left = ((s/td)*100).toFixed(3)+'%'; bf.style.width = ((p.days/td)*100).toFixed(3)+'%'; }
+    if(pi && parseInt(pi.value) !== p.days) pi.value = p.days;
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHART
+═══════════════════════════════════════════════════════════ */
+function drawChart(totalInv, marginUnit, sales, td){
+  const W = 32;
+  const labels = [], data = [];
+  const disbWeek = Math.ceil(td / 7);
+  let cum = -totalInv;
+  for(let w = 0; w <= W; w++){
+    labels.push('S'+w);
+    if(w > 0 && w >= disbWeek) cum += (sales / 4.33) * marginUnit;
+    data.push(parseFloat(cum.toFixed(2)));
+  }
+  const ptC = data.map(v => v >= 0 ? '#22c98a' : '#e05c35');
+  if(chart) chart.destroy();
+  chart = new Chart(document.getElementById('cfChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: '#4a9eff',
+        backgroundColor: (ctx) => {
+          const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 220);
+          gradient.addColorStop(0,   'rgba(74,158,255,0.12)');
+          gradient.addColorStop(1,   'rgba(74,158,255,0.00)');
+          return gradient;
+        },
+        pointBackgroundColor: ptC,
+        pointBorderColor: ptC,
+        pointRadius: 3.5,
+        pointHoverRadius: 5,
+        tension: .4,
+        fill: true,
+        borderWidth: 1.5,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a17',
+          borderColor: '#2a2a26',
+          borderWidth: 1,
+          titleColor: '#888880',
+          bodyColor: '#e8e6df',
+          bodyFont: { family: 'DM Mono, monospace', size: 12 },
+          callbacks: { label: ctx => fmtMoney(ctx.parsed.y) }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color:'#555550', font:{ size:10, family:'DM Mono, monospace' }, maxTicksLimit:17, maxRotation:0 },
+          grid: { color:'rgba(255,255,255,0.04)' },
+          border: { color: '#2a2a26' }
+        },
+        y: {
+          ticks: { color:'#555550', font:{ size:10, family:'DM Mono, monospace' }, callback: v => fmtMoneyK(v) },
+          grid: { color:'rgba(255,255,255,0.04)' },
+          border: { color: '#2a2a26' }
+        }
+      }
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PROMPT BUTTONS
+═══════════════════════════════════════════════════════════ */
+function buildContext(){
+  const { fob, ops, price, units, sales, fba } = S;
+  const totalInv  = fob + ops;
+  const cpu       = totalInv / units;
+  const amzFee    = price * 0.15;
+  const margin    = price - cpu - amzFee - fba;
+  const marginPct = ((margin/price)*100).toFixed(1);
+  const profit    = (sales * margin).toFixed(2);
+  const td        = totalDays();
+  return `Projeto: importação de electric shaver da China para Amazon EUA.
+Empresa: G2 Technology and Business, LLC | Logística: Red Stag Fulfillment
+
+── PARÂMETROS ──────────────────────────────────
+Custo FOB China:          ${fmtMoney(fob)}
+Custos operacionais:      ${fmtMoney(ops)}  (frete, customs, WH)
+Investimento total landed:${fmtMoney(totalInv)}
+Preço de venda Amazon:    ${fmtMoney(price)} / unidade
+Unidades no pedido:       ${units.toLocaleString()} un.
+Vendas mensais estimadas: ${sales} un./mês
+Taxa FBA:                 ${fmtMoney(fba)} / unidade
+
+── MÉTRICAS CALCULADAS ─────────────────────────
+Custo por unidade (landed): ${fmtMoney(cpu)}
+Comissão Amazon (15%):      ${fmtMoney(price*0.15)}
+Margem líq. por unidade:    ${fmtMoney(margin)} (${marginPct}%)
+Lucro mensal estimado:      ${fmtMoney(parseFloat(profit))}
+Ciclo total de caixa:       ${td} dias`;
+}
+
+function handleBtn(type){
+  const ctx = buildContext();
+  const prompt = type === 'risk'
+    ? ctx + '\n\n── SOLICITAÇÃO ─────────────────────────────────\nCom base nesses dados, liste os maiores riscos operacionais e financeiros desse projeto e sugira ações práticas de mitigação para cada um.'
+    : ctx + '\n\n── SOLICITAÇÃO ─────────────────────────────────\nCom base nesses dados, calcule: (1) ROI do investimento total, (2) payback period, (3) break-even de unidades mensais mínimas para viabilidade, (4) sensibilidade da margem a variações de ±10% no preço de venda e no FOB.';
+
+  if(typeof sendPrompt === 'function'){ sendPrompt(prompt); return; }
+
+  document.getElementById('modal-title').textContent = type === 'risk' ? 'Analisar riscos do cenário' : 'Calcular ROI e break-even';
+  document.getElementById('modal-prompt').textContent = prompt;
+  document.getElementById('copy-ok').style.display = 'none';
+  document.getElementById('modal').classList.add('open');
+}
+
+function copyPrompt(){
+  navigator.clipboard.writeText(document.getElementById('modal-prompt').textContent).then(()=>{
+    const ok = document.getElementById('copy-ok');
+    ok.style.display = 'inline';
+    setTimeout(() => ok.style.display = 'none', 2500);
+  });
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if(e.target === document.getElementById('modal')) closeModal(); });
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+buildTimeline();
+calc();
+</script>
+</body>
+</html>
