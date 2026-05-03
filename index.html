@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>G2 Technology — Projeto Shaver · Fluxo de Caixa</title>
+<title>G2 Technology — Projeto Shaver · Fluxo de Caixa v5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
@@ -134,7 +134,37 @@ input[type=range]::-webkit-slider-thumb {
 input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,158,255,.25); }
 .inp-note { font-size: 10px; color: var(--c-dim); margin-top: 6px; }
 
-/* ── COST SPLIT ── */
+/* ── MONTHLY COSTS GROUP ── */
+.costs-group {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-purple);
+  border-radius: var(--r2);
+  padding: 14px 16px 12px;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.costs-group-title {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--c-purple); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.costs-group-title::after { content:''; flex:1; height:1px; background: rgba(159,135,245,.2); }
+.costs-inner-card { background: var(--c-card2); border-radius: var(--r); padding: 12px 13px 10px; }
+.monthly-total-bar {
+  grid-column: 1 / -1;
+  background: rgba(159,135,245,.06);
+  border: 1px solid rgba(159,135,245,.18);
+  border-radius: var(--r);
+  padding: 9px 14px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 12px;
+}
+
+
 .cost-split {
   background: var(--c-card);
   border: 1px solid var(--c-border);
@@ -294,7 +324,7 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <div class="header-sub">G2 Technology and Business, LLC · Amazon EUA</div>
     </div>
   </div>
-  <div class="header-badge">v4.0</div>
+  <div class="header-badge">v5.0</div>
 </div>
 
 <!-- ───────── INPUTS ───────── -->
@@ -369,6 +399,59 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <div class="inp-note">Fulfillment by Amazon fee</div>
     </div>
 
+    <!-- ── CUSTOS MENSAIS GROUP ── -->
+    <div class="costs-group">
+      <div class="costs-group-title">Custos mensais operacionais</div>
+
+      <!-- PPC Amazon -->
+      <div class="costs-inner-card">
+        <label class="inp-label" for="ppc-n">Amazon PPC (tráfego Amazon)</label>
+        <div class="inp-row">
+          <span class="inp-pfx">$</span>
+          <input type="number" class="inp-field" id="ppc-n" min="0" max="100000" step="50" value="2750" oninput="onN('ppc')">
+          <span class="inp-sfx">/mês</span>
+        </div>
+        <input type="range" id="ppc-r" min="0" max="10000" step="50" value="2750" oninput="onR('ppc')">
+        <div class="inp-note">Sponsored Products, Brands — ~10% da receita</div>
+      </div>
+
+      <!-- Tráfego Pago Externo -->
+      <div class="costs-inner-card">
+        <label class="inp-label" for="traffic-n">Tráfego Pago Externo</label>
+        <div class="inp-row">
+          <span class="inp-pfx">$</span>
+          <input type="number" class="inp-field" id="traffic-n" min="0" max="100000" step="50" value="0" oninput="onN('traffic')">
+          <span class="inp-sfx">/mês</span>
+        </div>
+        <input type="range" id="traffic-r" min="0" max="5000" step="50" value="0" oninput="onR('traffic')">
+        <div class="inp-note">Meta Ads, Google, Influencers, etc.</div>
+      </div>
+
+      <!-- Despesas Fixas LLC -->
+      <div class="costs-inner-card">
+        <label class="inp-label" for="fixed-n">Despesas Fixas da LLC</label>
+        <div class="inp-row">
+          <span class="inp-pfx">$</span>
+          <input type="number" class="inp-field" id="fixed-n" min="0" max="100000" step="50" value="800" oninput="onN('fixed')">
+          <span class="inp-sfx">/mês</span>
+        </div>
+        <input type="range" id="fixed-r" min="0" max="5000" step="50" value="800" oninput="onR('fixed')">
+        <div class="inp-note">Contabilidade, software, taxas estaduais</div>
+      </div>
+
+      <!-- Barra total mensal -->
+      <div class="monthly-total-bar">
+        <span style="color:var(--c-muted);font-family:var(--font-mono);font-size:11px">Total custos mensais =</span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">PPC <span id="split-ppc" style="color:var(--c-text)">$2,750.00</span></span>
+        <span style="color:var(--c-border2)">+</span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">Tráfego <span id="split-traffic" style="color:var(--c-text)">$0.00</span></span>
+        <span style="color:var(--c-border2)">+</span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">Fixas <span id="split-fixed" style="color:var(--c-text)">$800.00</span></span>
+        <span style="color:var(--c-border2)">=</span>
+        <span style="font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-purple)" id="split-monthly-total">$3,550.00</span>
+      </div>
+    </div>
+
   </div><!-- /inputs-grid -->
 
   <!-- CUSTO TOTAL DISPLAY -->
@@ -437,7 +520,7 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
 /* ═══════════════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════════════ */
-const S = { fob:35000, ops:5000, price:45.00, units:2000, sales:40, fba:4.50 };
+const S = { fob:35000, ops:5000, price:45.00, units:2000, sales:40, fba:4.50, ppc:2750, traffic:0, fixed:800 };
 
 const PHASES = [
   { label:'Produção + QC',      days:25, color:'#9f87f5', note:'Fabricação e inspeção na China' },
@@ -494,39 +577,53 @@ function onPhase(i, v){
 let chart = null;
 
 function calc(){
-  const { fob, ops, price, units, sales, fba } = S;
+  const { fob, ops, price, units, sales, fba, ppc, traffic, fixed } = S;
 
   // Core financials
-  const totalInvested = fob + ops;
-  const cpuLanded     = totalInvested / units;
-  const amzFee        = price * 0.15;
-  const marginUnit    = price - cpuLanded - amzFee - fba;
-  const marginPct     = (marginUnit / price) * 100;
-  const revenueMonth  = sales * price;
-  const profitMonth   = sales * marginUnit;
-  const stockDuration = sales > 0 ? units / sales : Infinity; // months
+  const totalInvested   = fob + ops;
+  const cpuLanded       = totalInvested / units;
+  const amzFee          = price * 0.15;
+  const marginUnit      = price - cpuLanded - amzFee - fba;
+  const marginPct       = (marginUnit / price) * 100;
+  const revenueMonth    = sales * price;
+  const profitGross     = sales * marginUnit;             // antes dos custos mensais
+  const totalMonthlyCosts = ppc + traffic + fixed;
+  const profitMonth     = profitGross - totalMonthlyCosts; // lucro real após custos mensais
+  const stockDuration   = sales > 0 ? units / sales : Infinity;
   const breakEvenMonths = profitMonth > 0 ? totalInvested / profitMonth : Infinity;
+  const acosPct         = revenueMonth > 0 ? (ppc / revenueMonth) * 100 : 0;
 
   // Breakeven week in chart
   const td = totalDays();
 
-  // ── Split display
+  // ── Split display (landed)
   document.getElementById('split-fob').textContent   = fmtMoney(fob);
   document.getElementById('split-ops').textContent   = fmtMoney(ops);
   document.getElementById('split-total').textContent = fmtMoney(totalInvested);
 
+  // ── Split display (monthly)
+  document.getElementById('split-ppc').textContent           = fmtMoney(ppc);
+  document.getElementById('split-traffic').textContent       = fmtMoney(traffic);
+  document.getElementById('split-fixed').textContent         = fmtMoney(fixed);
+  document.getElementById('split-monthly-total').textContent = fmtMoney(totalMonthlyCosts);
+
   // ── Alerts
   const alerts = [];
   if(marginPct < 15){
-    alerts.push({ type:'crit', icon:'⛔', text:`Margem líquida de ${marginPct.toFixed(1)}% está abaixo de 15% — inviável para operar na Amazon com sustentabilidade. Revise o FOB ou aumente o preço de venda.` });
+    alerts.push({ type:'crit', icon:'⛔', text:`Margem unitária de ${marginPct.toFixed(1)}% abaixo de 15% — inviável. Revise o FOB ou aumente o preço de venda.` });
   } else if(marginPct < 25){
-    alerts.push({ type:'warn', icon:'⚠', text:`Margem de ${marginPct.toFixed(1)}% está na zona de atenção (abaixo de 25%). Pequenas variações de custo ou preço podem comprometer a operação.` });
+    alerts.push({ type:'warn', icon:'⚠', text:`Margem unitária de ${marginPct.toFixed(1)}% na zona de atenção (abaixo de 25%). Pequenas variações de custo podem comprometer a operação.` });
+  }
+  if(profitMonth <= 0){
+    alerts.push({ type:'crit', icon:'🚨', text:`Lucro real negativo: os custos mensais (${fmtMoney(totalMonthlyCosts)}/mês) superam o lucro bruto das vendas (${fmtMoney(profitGross)}/mês). A operação está queimando caixa mensalmente.` });
+  } else if(totalMonthlyCosts > profitGross * 0.4){
+    alerts.push({ type:'warn', icon:'⚠', text:`Custos mensais (${fmtMoney(totalMonthlyCosts)}) representam ${((totalMonthlyCosts/profitGross)*100).toFixed(0)}% do lucro bruto. Monitore o ACoS e as despesas fixas.` });
   }
   if(isFinite(breakEvenMonths) && isFinite(stockDuration) && breakEvenMonths >= stockDuration * 0.85){
-    alerts.push({ type:'crit', icon:'🚨', text:`Risco crítico de caixa: o break-even do estoque (${breakEvenMonths.toFixed(1)} meses) se aproxima ou ultrapassa a duração do estoque (${stockDuration.toFixed(1)} meses). Você pode ficar sem capital para reabastecer antes de recuperar o investimento.` });
+    alerts.push({ type:'crit', icon:'🚨', text:`Risco crítico de caixa: break-even (${breakEvenMonths.toFixed(1)} meses) próximo ou superior à duração do estoque (${stockDuration.toFixed(1)} meses). Capital insuficiente para reposição.` });
   }
   if(alerts.length === 0){
-    alerts.push({ type:'ok', icon:'✓', text:`Margem de ${marginPct.toFixed(1)}% e break-even em ${isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1):'—'} meses. Cenário dentro dos parâmetros saudáveis.` });
+    alerts.push({ type:'ok', icon:'✓', text:`Margem de ${marginPct.toFixed(1)}%, lucro real ${fmtMoney(profitMonth)}/mês e break-even em ${isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1):'—'} meses. Cenário dentro dos parâmetros saudáveis.` });
   }
   document.getElementById('alerts').innerHTML = alerts.map(a =>
     `<div class="alert ${a.type}"><span class="alert-icon">${a.icon}</span><span>${a.text}</span></div>`
@@ -534,18 +631,23 @@ function calc(){
 
   // ── Metrics
   const mdata = [
-    { label:'Investimento total landed',  val:fmtMoney(totalInvested),         cls: 'neg',  sub: `FOB + Operacional` },
-    { label:'Custo por unidade (landed)', val:fmtMoney(cpuLanded),             cls: 'neu',  sub: `${units.toLocaleString()} un.` },
-    { label:'Margem líq. / unidade',      val:`${fmtMoney(marginUnit)} (${marginPct.toFixed(1)}%)`, cls: marginPct>=25?'pos':marginPct>=15?'warn':'neg', sub: `Após fees Amazon + FBA` },
-    { label:'Comissão Amazon (referral)', val:fmtMoney(amzFee),                cls: 'neu',  sub: `15% sobre $${price.toFixed(2)}` },
-    { label:'Taxa FBA / unidade',         val:fmtMoney(fba),                   cls: 'neu',  sub: `Fulfillment fee` },
-    { label:'Receita mensal estimada',    val:fmtMoney(revenueMonth),          cls: 'pos',  sub: `${sales} un. × $${price.toFixed(2)}` },
-    { label:'Lucro mensal estimado',      val:fmtMoney(profitMonth),           cls: profitMonth>0?'pos':'neg', sub: `Após todos os custos` },
-    { label:'Break-even do estoque',      val:isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1)+' meses':'N/A', cls: isFinite(breakEvenMonths)&&breakEvenMonths<=6?'pos':isFinite(breakEvenMonths)&&breakEvenMonths<=12?'warn':'neg', sub: `Para recuperar ${fmtMoneyK(totalInvested)}` },
-    { label:'Duração do estoque',         val:isFinite(stockDuration)?stockDuration.toFixed(1)+' meses':'∞', cls: (isFinite(breakEvenMonths)&&isFinite(stockDuration)&&breakEvenMonths>=stockDuration*.85)?'warn':'blu', sub: `${units} un. ÷ ${sales} un./mês` },
-    { label:'1º repasse estimado',        val:fmtMoney(Math.max(0, sales*0.5*Math.max(0,price-amzFee-fba))), cls:'pos', sub:`Após ${td} dias de ciclo` },
-    { label:'Ciclo total de caixa',       val:td+' dias',                      cls:'blu',   sub:`Da produção ao repasse` },
-    { label:'1ª reposição necessária em', val:isFinite(stockDuration)?`mês ${Math.max(1,Math.round(stockDuration*0.8))}`:'—', cls:'warn', sub:`Antes de zerar estoque` },
+    { label:'Investimento total landed',    val:fmtMoney(totalInvested),         cls:'neg',  sub:`FOB + Operacional` },
+    { label:'Custo por unidade (landed)',   val:fmtMoney(cpuLanded),             cls:'neu',  sub:`${units.toLocaleString()} un.` },
+    { label:'Margem líq. / unidade',        val:`${fmtMoney(marginUnit)} (${marginPct.toFixed(1)}%)`, cls:marginPct>=25?'pos':marginPct>=15?'warn':'neg', sub:`Após fees Amazon + FBA` },
+    { label:'Comissão Amazon (referral)',   val:fmtMoney(amzFee),                cls:'neu',  sub:`15% sobre $${price.toFixed(2)}` },
+    { label:'Taxa FBA / unidade',           val:fmtMoney(fba),                   cls:'neu',  sub:`Fulfillment fee` },
+    { label:'Receita mensal estimada',      val:fmtMoney(revenueMonth),          cls:'pos',  sub:`${sales} un. × $${price.toFixed(2)}` },
+    { label:'Lucro bruto mensal',           val:fmtMoney(profitGross),           cls:profitGross>0?'pos':'neg', sub:`Antes dos custos mensais` },
+    { label:'Amazon PPC',                   val:fmtMoney(ppc),                   cls:'warn', sub:`ACoS ${acosPct.toFixed(1)}% da receita` },
+    { label:'Tráfego pago externo',         val:fmtMoney(traffic),               cls:traffic>0?'warn':'neu', sub:`Meta, Google, Influencers` },
+    { label:'Despesas fixas LLC',           val:fmtMoney(fixed),                 cls:'warn', sub:`Contab., software, taxas` },
+    { label:'Total custos mensais',         val:fmtMoney(totalMonthlyCosts),     cls:totalMonthlyCosts>profitGross*0.4?'neg':'warn', sub:`PPC + Tráfego + Fixas` },
+    { label:'Lucro líquido mensal',         val:fmtMoney(profitMonth),           cls:profitMonth>0?'pos':'neg', sub:`Após todos os custos` },
+    { label:'Break-even do estoque',        val:isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1)+' meses':'N/A', cls:isFinite(breakEvenMonths)&&breakEvenMonths<=6?'pos':isFinite(breakEvenMonths)&&breakEvenMonths<=12?'warn':'neg', sub:`Para recuperar ${fmtMoneyK(totalInvested)}` },
+    { label:'Duração do estoque',           val:isFinite(stockDuration)?stockDuration.toFixed(1)+' meses':'∞', cls:(isFinite(breakEvenMonths)&&isFinite(stockDuration)&&breakEvenMonths>=stockDuration*.85)?'warn':'blu', sub:`${units} un. ÷ ${sales} un./mês` },
+    { label:'1º repasse estimado',          val:fmtMoney(Math.max(0, sales*0.5*Math.max(0,price-amzFee-fba))), cls:'pos', sub:`Após ${td} dias de ciclo` },
+    { label:'Ciclo total de caixa',         val:td+' dias',                      cls:'blu',  sub:`Da produção ao repasse` },
+    { label:'1ª reposição necessária em',   val:isFinite(stockDuration)?`mês ${Math.max(1,Math.round(stockDuration*0.8))}`:'—', cls:'warn', sub:`Antes de zerar estoque` },
   ];
   const mcard = (m, i) => {
     const cmap = {pos:'pos',neg:'neg',warn:'warn',blu:'blu',neu:''};
@@ -561,7 +663,7 @@ function calc(){
   updateTimeline();
 
   // ── Chart
-  drawChart(totalInvested, marginUnit, sales, td);
+  drawChart(totalInvested, profitMonth, sales, td);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -606,14 +708,15 @@ function updateTimeline(){
 /* ═══════════════════════════════════════════════════════════
    CHART
 ═══════════════════════════════════════════════════════════ */
-function drawChart(totalInv, marginUnit, sales, td){
+function drawChart(totalInv, profitMonthNet, sales, td){
   const W = 32;
   const labels = [], data = [];
   const disbWeek = Math.ceil(td / 7);
   let cum = -totalInv;
   for(let w = 0; w <= W; w++){
     labels.push('S'+w);
-    if(w > 0 && w >= disbWeek) cum += (sales / 4.33) * marginUnit;
+    // after disbursement starts, add weekly share of monthly net profit
+    if(w > 0 && w >= disbWeek) cum += profitMonthNet / 4.33;
     data.push(parseFloat(cum.toFixed(2)));
   }
   const ptC = data.map(v => v >= 0 ? '#22c98a' : '#e05c35');
@@ -675,31 +778,44 @@ function drawChart(totalInv, marginUnit, sales, td){
    PROMPT BUTTONS
 ═══════════════════════════════════════════════════════════ */
 function buildContext(){
-  const { fob, ops, price, units, sales, fba } = S;
-  const totalInv  = fob + ops;
-  const cpu       = totalInv / units;
-  const amzFee    = price * 0.15;
-  const margin    = price - cpu - amzFee - fba;
-  const marginPct = ((margin/price)*100).toFixed(1);
-  const profit    = (sales * margin).toFixed(2);
-  const td        = totalDays();
+  const { fob, ops, price, units, sales, fba, ppc, traffic, fixed } = S;
+  const totalInv       = fob + ops;
+  const cpu            = totalInv / units;
+  const amzFee         = price * 0.15;
+  const margin         = price - cpu - amzFee - fba;
+  const marginPct      = ((margin/price)*100).toFixed(1);
+  const profitGross    = sales * margin;
+  const totalMonthly   = ppc + traffic + fixed;
+  const profitNet      = profitGross - totalMonthly;
+  const acos           = sales*price > 0 ? ((ppc/(sales*price))*100).toFixed(1) : '0.0';
+  const td             = totalDays();
   return `Projeto: importação de electric shaver da China para Amazon EUA.
 Empresa: G2 Technology and Business, LLC | Logística: Red Stag Fulfillment
 
-── PARÂMETROS ──────────────────────────────────
-Custo FOB China:          ${fmtMoney(fob)}
-Custos operacionais:      ${fmtMoney(ops)}  (frete, customs, WH)
-Investimento total landed:${fmtMoney(totalInv)}
-Preço de venda Amazon:    ${fmtMoney(price)} / unidade
-Unidades no pedido:       ${units.toLocaleString()} un.
-Vendas mensais estimadas: ${sales} un./mês
-Taxa FBA:                 ${fmtMoney(fba)} / unidade
-
-── MÉTRICAS CALCULADAS ─────────────────────────
+── INVESTIMENTO (ONE-TIME) ─────────────────────
+Custo FOB China:            ${fmtMoney(fob)}
+Custos operacionais:        ${fmtMoney(ops)}  (frete, customs, WH)
+Investimento total landed:  ${fmtMoney(totalInv)}
+Unidades no pedido:         ${units.toLocaleString()} un.
 Custo por unidade (landed): ${fmtMoney(cpu)}
-Comissão Amazon (15%):      ${fmtMoney(price*0.15)}
+
+── RECEITA E MARGEM ────────────────────────────
+Preço de venda Amazon:      ${fmtMoney(price)} / unidade
+Comissão Amazon (15%):      ${fmtMoney(amzFee)}
+Taxa FBA:                   ${fmtMoney(fba)} / unidade
 Margem líq. por unidade:    ${fmtMoney(margin)} (${marginPct}%)
-Lucro mensal estimado:      ${fmtMoney(parseFloat(profit))}
+Vendas mensais estimadas:   ${sales} un./mês
+Receita mensal:             ${fmtMoney(sales*price)}
+Lucro bruto mensal:         ${fmtMoney(profitGross)}
+
+── CUSTOS MENSAIS OPERACIONAIS ─────────────────
+Amazon PPC:                 ${fmtMoney(ppc)}/mês  (ACoS ${acos}%)
+Tráfego pago externo:       ${fmtMoney(traffic)}/mês
+Despesas fixas LLC:         ${fmtMoney(fixed)}/mês
+Total custos mensais:       ${fmtMoney(totalMonthly)}/mês
+Lucro líquido mensal:       ${fmtMoney(profitNet)}
+
+── CICLO ───────────────────────────────────────
 Ciclo total de caixa:       ${td} dias`;
 }
 
