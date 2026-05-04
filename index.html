@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>G2 Technology — Projeto Shaver · Fluxo de Caixa v5</title>
+<title>G2 Technology — Projeto Shaver · Fluxo de Caixa v5.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
@@ -103,6 +103,7 @@ input[type=number] { -moz-appearance: textfield; }
   transition: border-color .15s;
 }
 .inp-card:focus-within { border-color: var(--c-border2); }
+.inp-card.accent-blue { border-left: 3px solid var(--c-blue); }
 .inp-label { font-size: 11px; color: var(--c-muted); margin-bottom: 10px; display: block; line-height: 1.3; }
 .inp-row { display: flex; align-items: center; gap: 5px; margin-bottom: 10px; }
 .inp-pfx, .inp-sfx { font-family: var(--font-mono); font-size: 12px; color: var(--c-dim); }
@@ -212,6 +213,11 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
 .metric-card.warn::before { background: var(--c-amber-bg); }
 .metric-card.blu::before  { background: var(--c-blue-bg); }
 .metric-card:hover::before { opacity: 1; }
+.metric-card.featured {
+  border-color: rgba(74,158,255,0.35);
+  background: linear-gradient(135deg, var(--c-card) 0%, rgba(74,158,255,0.04) 100%);
+}
+.metric-card.featured::before { background: var(--c-blue-bg); opacity: .35; }
 .m-label { font-size: 10px; color: var(--c-muted); line-height: 1.3; margin-bottom: 6px; position: relative; }
 .m-value { font-family: var(--font-mono); font-size: 20px; font-weight: 400; line-height: 1.1; position: relative; }
 .m-sub   { font-size: 10px; color: var(--c-muted); margin-top: 3px; position: relative; }
@@ -255,6 +261,127 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
 .litem { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--c-dim); }
 .ldot { width: 8px; height: 8px; border-radius: 2px; }
 .chart-wrap { position: relative; width: 100%; height: 220px; }
+
+/* ── INSIGHTS ── */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.insight-card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r2);
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.insight-card.crit  { border-left: 3px solid var(--c-red); }
+.insight-card.opt   { border-left: 3px solid var(--c-amber); }
+.insight-card.ok    { border-left: 3px solid var(--c-green); }
+.insight-card.strat { border-left: 3px solid var(--c-blue); }
+.insight-head {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 500; color: var(--c-text);
+  line-height: 1.3;
+}
+.insight-icon { font-size: 13px; flex-shrink: 0; }
+.insight-body {
+  font-size: 11.5px;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+.insight-body strong {
+  color: var(--c-text);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.insight-action {
+  font-size: 11.5px;
+  color: var(--c-text);
+  border-top: 1px dashed var(--c-border);
+  padding-top: 8px;
+  line-height: 1.55;
+}
+.insight-action::before {
+  content: '▸ ';
+  color: var(--c-blue);
+  font-weight: 500;
+}
+.insight-action strong {
+  color: var(--c-blue);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* ── LEVERS ── */
+.levers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.lever-card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r2);
+  padding: 14px;
+  position: relative;
+  transition: all .2s;
+}
+.lever-card.dominant {
+  border-color: rgba(74, 158, 255, 0.4);
+  background: linear-gradient(135deg, var(--c-card) 0%, rgba(74, 158, 255, 0.06) 100%);
+}
+.lever-star {
+  position: absolute;
+  top: 10px; right: 12px;
+  color: var(--c-blue);
+  font-size: 13px;
+}
+.lever-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-text);
+  margin-bottom: 3px;
+}
+.lever-detail {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-dim);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.lever-flow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--c-muted);
+  margin-bottom: 4px;
+}
+.lever-arrow { color: var(--c-dim); margin: 0 4px; }
+.lever-flow-new { color: var(--c-text); }
+.lever-gain {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.lever-gain.up   { color: var(--c-green); }
+.lever-gain.down { color: var(--c-red); }
+.lever-gain.flat { color: var(--c-dim); }
+.levers-foot {
+  font-size: 10px;
+  color: var(--c-dim);
+  font-style: italic;
+  margin-top: -16px;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
 
 /* ── BUTTONS ── */
 .btns-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -324,7 +451,7 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <div class="header-sub">G2 Technology and Business, LLC · Amazon EUA</div>
     </div>
   </div>
-  <div class="header-badge">v5.0</div>
+  <div class="header-badge">v5.3</div>
 </div>
 
 <!-- ───────── INPUTS ───────── -->
@@ -338,9 +465,9 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <label class="inp-label" for="fob-n">Custo do Pedido (FOB China)</label>
       <div class="inp-row">
         <span class="inp-pfx">$</span>
-        <input type="number" class="inp-field" id="fob-n" min="500" max="500000" step="100" value="35000" oninput="onN('fob')">
+        <input type="number" class="inp-field" id="fob-n" min="500" max="500000" step="100" value="22000" oninput="onN('fob')">
       </div>
-      <input type="range" id="fob-r" min="500" max="100000" step="100" value="35000" oninput="onR('fob')">
+      <input type="range" id="fob-r" min="500" max="100000" step="100" value="22000" oninput="onR('fob')">
       <div class="inp-note">Valor pago ao fornecedor — sem logística</div>
     </div>
 
@@ -349,10 +476,10 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <label class="inp-label" for="ops-n">Custos Operacionais (Logística)</label>
       <div class="inp-row">
         <span class="inp-pfx">$</span>
-        <input type="number" class="inp-field" id="ops-n" min="0" max="500000" step="50" value="5000" oninput="onN('ops')">
+        <input type="number" class="inp-field" id="ops-n" min="0" max="500000" step="50" value="12000" oninput="onN('ops')">
       </div>
-      <input type="range" id="ops-r" min="0" max="30000" step="50" value="5000" oninput="onR('ops')">
-      <div class="inp-note">Frete, customs, Red Stag, taxas</div>
+      <input type="range" id="ops-r" min="0" max="30000" step="50" value="12000" oninput="onR('ops')">
+      <div class="inp-note">Frete, customs, fulfillment, taxas</div>
     </div>
 
     <!-- Preço Amazon -->
@@ -360,9 +487,9 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <label class="inp-label" for="price-n">Preço de Venda Amazon (por unit)</label>
       <div class="inp-row">
         <span class="inp-pfx">$</span>
-        <input type="number" class="inp-field" id="price-n" min="5" max="2000" step="0.50" value="45.00" oninput="onN('price')">
+        <input type="number" class="inp-field" id="price-n" min="5" max="2000" step="0.50" value="79.90" oninput="onN('price')">
       </div>
-      <input type="range" id="price-r" min="5" max="200" step="0.50" value="45" oninput="onR('price')">
+      <input type="range" id="price-r" min="5" max="200" step="0.50" value="79.90" oninput="onR('price')">
       <div class="inp-note">Listing price — antes das taxas</div>
     </div>
 
@@ -381,10 +508,10 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
     <div class="inp-card">
       <label class="inp-label" for="sales-n">Vendas Mensais Estimadas</label>
       <div class="inp-row">
-        <input type="number" class="inp-field" id="sales-n" min="1" max="50000" step="5" value="40" oninput="onN('sales')">
+        <input type="number" class="inp-field" id="sales-n" min="1" max="50000" step="5" value="300" oninput="onN('sales')">
         <span class="inp-sfx">un./mês</span>
       </div>
-      <input type="range" id="sales-r" min="5" max="1000" step="5" value="40" oninput="onR('sales')">
+      <input type="range" id="sales-r" min="5" max="1000" step="5" value="300" oninput="onR('sales')">
       <div class="inp-note">Velocidade de sell-through</div>
     </div>
 
@@ -399,6 +526,17 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
       <div class="inp-note">Fulfillment by Amazon fee</div>
     </div>
 
+    <!-- ── NOVO: Margem Líquida Alvo (markup reverso) ── -->
+    <div class="inp-card accent-blue">
+      <label class="inp-label" for="targetMargin-n">Margem Líquida Alvo (%)</label>
+      <div class="inp-row">
+        <input type="number" class="inp-field" id="targetMargin-n" min="0" max="80" step="1" value="30" oninput="onN('targetMargin')">
+        <span class="inp-sfx">%</span>
+      </div>
+      <input type="range" id="targetMargin-r" min="0" max="80" step="1" value="30" oninput="onR('targetMargin')">
+      <div class="inp-note">Calcula preço ideal considerando TODOS os custos (FOB, FBA, comissão Amazon e custos mensais rateados)</div>
+    </div>
+
     <!-- ── CUSTOS MENSAIS GROUP ── -->
     <div class="costs-group">
       <div class="costs-group-title">Custos mensais operacionais</div>
@@ -408,10 +546,10 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
         <label class="inp-label" for="ppc-n">Amazon PPC (tráfego Amazon)</label>
         <div class="inp-row">
           <span class="inp-pfx">$</span>
-          <input type="number" class="inp-field" id="ppc-n" min="0" max="100000" step="50" value="2750" oninput="onN('ppc')">
+          <input type="number" class="inp-field" id="ppc-n" min="0" max="100000" step="50" value="6000" oninput="onN('ppc')">
           <span class="inp-sfx">/mês</span>
         </div>
-        <input type="range" id="ppc-r" min="0" max="10000" step="50" value="2750" oninput="onR('ppc')">
+        <input type="range" id="ppc-r" min="0" max="10000" step="50" value="6000" oninput="onR('ppc')">
         <div class="inp-note">Sponsored Products, Brands — ~10% da receita</div>
       </div>
 
@@ -432,23 +570,23 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
         <label class="inp-label" for="fixed-n">Despesas Fixas da LLC</label>
         <div class="inp-row">
           <span class="inp-pfx">$</span>
-          <input type="number" class="inp-field" id="fixed-n" min="0" max="100000" step="50" value="800" oninput="onN('fixed')">
+          <input type="number" class="inp-field" id="fixed-n" min="0" max="100000" step="50" value="1000" oninput="onN('fixed')">
           <span class="inp-sfx">/mês</span>
         </div>
-        <input type="range" id="fixed-r" min="0" max="5000" step="50" value="800" oninput="onR('fixed')">
+        <input type="range" id="fixed-r" min="0" max="5000" step="50" value="1000" oninput="onR('fixed')">
         <div class="inp-note">Contabilidade, software, taxas estaduais</div>
       </div>
 
       <!-- Barra total mensal -->
       <div class="monthly-total-bar">
         <span style="color:var(--c-muted);font-family:var(--font-mono);font-size:11px">Total custos mensais =</span>
-        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">PPC <span id="split-ppc" style="color:var(--c-text)">$2,750.00</span></span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">PPC <span id="split-ppc" style="color:var(--c-text)">$6,000.00</span></span>
         <span style="color:var(--c-border2)">+</span>
         <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">Tráfego <span id="split-traffic" style="color:var(--c-text)">$0.00</span></span>
         <span style="color:var(--c-border2)">+</span>
-        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">Fixas <span id="split-fixed" style="color:var(--c-text)">$800.00</span></span>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--c-dim)">Fixas <span id="split-fixed" style="color:var(--c-text)">$1,000.00</span></span>
         <span style="color:var(--c-border2)">=</span>
-        <span style="font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-purple)" id="split-monthly-total">$3,550.00</span>
+        <span style="font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-purple)" id="split-monthly-total">$7,000.00</span>
       </div>
     </div>
 
@@ -457,11 +595,11 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
   <!-- CUSTO TOTAL DISPLAY -->
   <div class="cost-split" style="margin-bottom:10px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
     <span style="font-size:11px;color:var(--c-muted)">Investimento Total Landed =</span>
-    <span style="font-family:var(--font-mono);font-size:12px;color:var(--c-dim)">FOB <span id="split-fob" style="color:var(--c-text)">$35,000.00</span></span>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--c-dim)">FOB <span id="split-fob" style="color:var(--c-text)">$22,000.00</span></span>
     <span style="color:var(--c-border2)">+</span>
-    <span style="font-family:var(--font-mono);font-size:12px;color:var(--c-dim)">Operacional <span id="split-ops" style="color:var(--c-text)">$5,000.00</span></span>
+    <span style="font-family:var(--font-mono);font-size:12px;color:var(--c-dim)">Operacional <span id="split-ops" style="color:var(--c-text)">$12,000.00</span></span>
     <span style="color:var(--c-border2)">=</span>
-    <span style="font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-red)" id="split-total">$40,000.00</span>
+    <span style="font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-red)" id="split-total">$34,000.00</span>
   </div>
 
   <!-- ALERTS -->
@@ -493,6 +631,16 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
     </div>
     <div class="chart-wrap"><canvas id="cfChart"></canvas></div>
   </div>
+</div>
+
+<!-- ───────── INSIGHTS ───────── -->
+<div class="section">
+  <div class="slabel">Análise e ações sugeridas <span class="slabel-hint">— top 5 insights priorizados</span></div>
+  <div class="insights-grid" id="insights-grid"></div>
+
+  <div class="slabel">Alavancas de impacto <span class="slabel-hint">— ganho em pontos percentuais (pp) na margem real</span></div>
+  <div class="levers-grid" id="levers-grid"></div>
+  <div class="levers-foot">★ alavanca dominante · simulações isoladas (variável-única) sobre o cenário atual</div>
 
   <div class="btns-row">
     <button class="btn btn-ghost" onclick="handleBtn('risk')">↗ Analisar riscos desse cenário</button>
@@ -520,12 +668,16 @@ input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(74,15
 /* ═══════════════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════════════ */
-const S = { fob:35000, ops:5000, price:45.00, units:2000, sales:40, fba:4.50, ppc:2750, traffic:0, fixed:800 };
+const S = {
+  fob: 22000, ops: 12000, price: 79.90, units: 2000, sales: 300, fba: 4.50,
+  ppc: 6000, traffic: 0, fixed: 1000,
+  targetMargin: 30   // novo: margem líquida alvo (%) para markup reverso
+};
 
 const PHASES = [
   { label:'Produção + QC',      days:25, color:'#9f87f5', note:'Fabricação e inspeção na China' },
   { label:'Frete marítimo',     days:30, color:'#22c98a', note:'China → EUA (marítimo)' },
-  { label:'Customs + Red Stag', days:10, color:'#4a9eff', note:'Desembaraço + recebimento WH' },
+  { label:'Customs + Fulfillment', days:10, color:'#4a9eff', note:'Desembaraço + recebimento WH' },
   { label:'Amazon inbound',     days:7,  color:'#e6a020', note:'Check-in FBA + listing ativo' },
   { label:'Primeiras vendas',   days:14, color:'#888880', note:'Acumulando histórico' },
   { label:'Reserva Amazon',     days:14, color:'#e05c35', note:'Período de retenção' },
@@ -572,12 +724,296 @@ function onPhase(i, v){
 }
 
 /* ═══════════════════════════════════════════════════════════
+   INSIGHTS ENGINE (rule-based)
+═══════════════════════════════════════════════════════════ */
+
+/**
+ * Gera insights priorizados a partir do estado computado.
+ * Cada insight tem: severity, priority (0-100), icon, title, body, action.
+ * Retorna top 5 ordenados por prioridade desc.
+ */
+function generateInsights(d) {
+  const ins = [];
+  const {
+    fob, ops, price, units, sales, fba, ppc, traffic, fixed, targetMargin,
+    cpuLanded, amzFee, marginUnit, marginPct, monthlyCostPerUnit,
+    trueMarginUnit, trueMarginPct, totalMonthlyCosts, profitGross, profitMonth,
+    breakEvenMonths, stockDuration, acosPct, idealPrice, idealPriceValid, totalInvested
+  } = d;
+
+  // ═══ CRÍTICOS ═══
+
+  if (profitMonth < 0 && marginUnit > 0) {
+    const minSalesBE = Math.ceil(totalMonthlyCosts / marginUnit);
+    const maxPpcBE = Math.max(0, profitGross - traffic - fixed);
+    ins.push({
+      sev:'crit', icon:'🚨', priority:100,
+      title:'Operação queimando caixa',
+      body:`Lucro líquido mensal de <strong>${fmtMoney(profitMonth)}</strong>. Custos mensais (${fmtMoney(totalMonthlyCosts)}) superam o lucro bruto (${fmtMoney(profitGross)}).`,
+      action:`Para virar positivo: cortar PPC para <strong>≤${fmtMoney(maxPpcBE)}</strong> ou escalar vendas para <strong>≥${minSalesBE} un./mês</strong>.`
+    });
+  }
+
+  if (isFinite(trueMarginPct) && trueMarginPct < 0) {
+    ins.push({
+      sev:'crit', icon:'🚨', priority:99,
+      title:'Margem real negativa por unidade',
+      body:`Cada unidade gera <strong>${fmtMoney(trueMarginUnit)}</strong> de prejuízo após todos os custos. CMU de <strong>${fmtMoney(monthlyCostPerUnit)}/un.</strong> consome a margem bruta de ${fmtMoney(marginUnit)}/un.`,
+      action:idealPriceValid ? `Subir preço para <strong>${fmtMoney(idealPrice)}</strong> ou diluir overhead via volume.` : `Recalibrar margem alvo ou estimativa de vendas.`
+    });
+  }
+
+  if (marginPct < 15) {
+    ins.push({
+      sev:'crit', icon:'🚨', priority:95,
+      title:'Margem bruta abaixo do mínimo viável',
+      body:`Margem unitária de <strong>${marginPct.toFixed(1)}%</strong> antes de PPC e custos mensais. Operação não tolera variação de FOB ou frete.`,
+      action:`Renegociar FOB (alvo: ≤${fmtMoney(price * 0.30)}/un. para 25% margem bruta) ou subir preço.`
+    });
+  }
+
+  if (acosPct > 50) {
+    const maxPpc = Math.round((sales * price) * 0.25);
+    ins.push({
+      sev:'crit', icon:'🚨', priority:90,
+      title:'ACoS insustentável',
+      body:`Pagando <strong>${acosPct.toFixed(1)}%</strong> da receita em PPC. Saudável: ≤25%. Aceitável só em ramp-up agressivo (<60 dias).`,
+      action:`Definir teto de PPC em <strong>${fmtMoney(maxPpc)}/mês</strong> (25% da receita) e migrar para palavras-chave de cauda longa.`
+    });
+  }
+
+  if (isFinite(breakEvenMonths) && isFinite(stockDuration) && breakEvenMonths >= stockDuration * 0.95) {
+    const targetSales = Math.ceil(totalInvested / (stockDuration * 0.6 * marginUnit));
+    ins.push({
+      sev:'crit', icon:'🚨', priority:88,
+      title:'Sem capital para reposição',
+      body:`Break-even (<strong>${breakEvenMonths.toFixed(1)}m</strong>) ≥ duração do estoque (<strong>${stockDuration.toFixed(1)}m</strong>). Pedido atual não gera caixa para o próximo.`,
+      action:`Vender ≥<strong>${targetSales} un./mês</strong> ou negociar prazo estendido com fornecedor.`
+    });
+  }
+
+  if (idealPriceValid && Math.abs(idealPrice - price) / price > 0.50) {
+    const dir = idealPrice > price ? 'abaixo' : 'acima';
+    const pct = ((idealPrice - price) / price * 100).toFixed(0);
+    ins.push({
+      sev:'crit', icon:'🚨', priority:85,
+      title:'Pricing distante do ideal',
+      body:`Preço atual ${fmtMoney(price)} está <strong>${pct}% ${dir}</strong> do necessário (${fmtMoney(idealPrice)}) para margem alvo de ${targetMargin}%.`,
+      action:`Validar viabilidade competitiva do preço ideal ou recalibrar margem alvo.`
+    });
+  }
+
+  // ═══ OTIMIZAÇÃO ═══
+
+  if (isFinite(breakEvenMonths) && isFinite(stockDuration) && breakEvenMonths >= stockDuration * 0.85 && breakEvenMonths < stockDuration * 0.95) {
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:80,
+      title:'Margem apertada para reposição',
+      body:`Break-even (<strong>${breakEvenMonths.toFixed(1)}m</strong>) está em ${(breakEvenMonths/stockDuration*100).toFixed(0)}% da duração do estoque. Reposição depende de timing perfeito.`,
+      action:`Iniciar negociação do 2º pedido em <strong>mês ${Math.max(1, Math.round(stockDuration*0.5))}</strong> e reservar ${fmtMoneyK(totalInvested * 0.7)} para nova compra.`
+    });
+  }
+
+  if (acosPct > 25 && acosPct <= 50) {
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:75,
+      title:'ACoS no teto saudável',
+      body:`ACoS em <strong>${acosPct.toFixed(1)}%</strong> — sustentável só em fase de aquisição agressiva. Precisa cair conforme orgânico ganha tração.`,
+      action:`Meta: reduzir para <strong>15-20%</strong> em 90-120 dias após launch via otimização de keywords e ranking orgânico.`
+    });
+  }
+
+  if (isFinite(monthlyCostPerUnit) && monthlyCostPerUnit > 2 * cpuLanded) {
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:70,
+      title:'Overhead mensal pesando demais',
+      body:`Custo mensal/un. (<strong>${fmtMoney(monthlyCostPerUnit)}</strong>) é <strong>${(monthlyCostPerUnit/cpuLanded).toFixed(1)}x</strong> o CPU landed (${fmtMoney(cpuLanded)}). Operação muito dependente de paid traffic.`,
+      action:`Escalar vendas é a alavanca dominante (ver "Alavancas de Impacto" abaixo).`
+    });
+  }
+
+  if (totalMonthlyCosts > profitGross * 0.40 && totalMonthlyCosts < profitGross && profitMonth > 0) {
+    const pctGross = (totalMonthlyCosts/profitGross*100).toFixed(0);
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:65,
+      title:'Custos mensais consomem maioria do lucro bruto',
+      body:`Custos mensais representam <strong>${pctGross}%</strong> do lucro bruto (${fmtMoney(profitGross)}). Pouca folga para imprevistos ou queda de demanda.`,
+      action:`Auditar despesas fixas LLC e revisar ACoS — meta saudável: custos mensais ≤30% do lucro bruto.`
+    });
+  }
+
+  if (marginPct >= 15 && marginPct < 25) {
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:60,
+      title:'Margem bruta na zona de atenção',
+      body:`Margem unitária de <strong>${marginPct.toFixed(1)}%</strong>. Saudável Amazon FBA: ≥25%. Pequenas variações de FOB/frete comprometem viabilidade.`,
+      action:`Negociar tier de preço com fornecedor para volumes ≥3.000 un. ou avaliar produto secundário.`
+    });
+  }
+
+  if (isFinite(breakEvenMonths) && breakEvenMonths >= 9 && breakEvenMonths <= 15) {
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:55,
+      title:'Break-even prolongado',
+      body:`Recuperação do investimento em <strong>${breakEvenMonths.toFixed(1)} meses</strong>. Saudável Amazon FBA: ≤6m.`,
+      action:`Aumentar lucro mensal ou fracionar próximo pedido em lotes menores para reduzir capital exposto.`
+    });
+  }
+
+  if (idealPriceValid && Math.abs(idealPrice - price) / price > 0.10 && Math.abs(idealPrice - price) / price <= 0.50) {
+    const dir = idealPrice > price ? 'abaixo' : 'acima';
+    const delta = idealPrice - price;
+    ins.push({
+      sev:'opt', icon:'⚠️', priority:50,
+      title:'Gap moderado vs preço ideal',
+      body:`Preço atual está <strong>${fmtMoney(Math.abs(delta))}</strong> ${dir} do ideal (${fmtMoney(idealPrice)}) para margem alvo de ${targetMargin}%.`,
+      action:`${delta > 0 ? 'Testar aumento gradual' : 'Avaliar redução'} de preço — monitorar conversion rate por 14 dias.`
+    });
+  }
+
+  // ═══ SAUDÁVEL ═══
+
+  const hasCritical = ins.some(i => i.sev === 'crit');
+
+  if (!hasCritical && profitMonth > 0 && marginPct >= 25 && (isFinite(breakEvenMonths) && breakEvenMonths <= 6)) {
+    ins.push({
+      sev:'ok', icon:'✅', priority:30,
+      title:'Cenário dentro de parâmetros saudáveis',
+      body:`Margem bruta <strong>${marginPct.toFixed(1)}%</strong>, lucro líquido <strong>${fmtMoney(profitMonth)}/mês</strong>, break-even em <strong>${breakEvenMonths.toFixed(1)}m</strong>.`,
+      action:`Próximo passo: validar projeções com 60 dias de dados reais e começar negociação do 2º pedido.`
+    });
+  }
+
+  if (acosPct > 0 && acosPct <= 25 && !hasCritical) {
+    ins.push({
+      sev:'ok', icon:'✅', priority:25,
+      title:'ACoS dentro do alvo',
+      body:`ACoS em <strong>${acosPct.toFixed(1)}%</strong> — eficiência saudável de PPC.`,
+      action:`Manter monitoramento semanal de keywords e bid optimization.`
+    });
+  }
+
+  if (isFinite(trueMarginPct) && trueMarginPct >= targetMargin - 2 && trueMarginPct < targetMargin && !hasCritical) {
+    ins.push({
+      sev:'ok', icon:'✅', priority:28,
+      title:'Margem real próxima do alvo',
+      body:`Margem real em <strong>${trueMarginPct.toFixed(1)}%</strong> vs alvo de <strong>${targetMargin}%</strong> — gap de apenas ${(targetMargin - trueMarginPct).toFixed(1)}pp.`,
+      action:idealPriceValid ? `Ajuste fino: subir preço para ${fmtMoney(idealPrice)} fecha o gap exato.` : null
+    });
+  }
+
+  // Ordenar por prioridade desc e retornar top 5
+  ins.sort((a, b) => b.priority - a.priority);
+  return ins.slice(0, 5);
+}
+
+/**
+ * Calcula 4 alavancas de sensibilidade isolada e retorna ordenadas por ganho.
+ */
+function generateLevers(d) {
+  const {
+    fob, ops, price, units, sales, fba, ppc, traffic, fixed,
+    cpuLanded, totalMonthlyCosts, trueMarginPct
+  } = d;
+
+  if (sales <= 0 || price <= 0) return [];
+
+  // Calcula trueMarginPct para um cenário hipotético
+  function tmp(p, cpu, fb, mc, sl) {
+    if (sl <= 0 || p <= 0) return NaN;
+    const cmu = mc / sl;
+    const margin = p - cpu - p * 0.15 - fb - cmu;
+    return (margin / p) * 100;
+  }
+
+  const base = trueMarginPct;
+
+  const levers = [
+    {
+      name: 'Vendas 2x',
+      detail: `${sales} → ${sales * 2} un./mês`,
+      newPct: tmp(price, cpuLanded, fba, totalMonthlyCosts, sales * 2)
+    },
+    {
+      name: 'PPC −30%',
+      detail: `${fmtMoney(ppc)} → ${fmtMoney(ppc * 0.7)}/mês`,
+      newPct: tmp(price, cpuLanded, fba, ppc * 0.7 + traffic + fixed, sales)
+    },
+    {
+      name: 'FOB −15%',
+      detail: `CPU ${fmtMoney(cpuLanded)} → ${fmtMoney(((fob * 0.85) + ops) / units)}`,
+      newPct: tmp(price, ((fob * 0.85) + ops) / units, fba, totalMonthlyCosts, sales)
+    },
+    {
+      name: 'Preço +10%',
+      detail: `${fmtMoney(price)} → ${fmtMoney(price * 1.10)}`,
+      newPct: tmp(price * 1.10, cpuLanded, fba, totalMonthlyCosts, sales)
+    }
+  ];
+
+  // Calcular ganho em pp e ordenar
+  levers.forEach(l => {
+    l.gain = isFinite(l.newPct) && isFinite(base) ? l.newPct - base : NaN;
+  });
+  levers.sort((a, b) => {
+    if (!isFinite(a.gain)) return 1;
+    if (!isFinite(b.gain)) return -1;
+    return b.gain - a.gain;
+  });
+  if (levers.length > 0 && isFinite(levers[0].gain)) levers[0].dominant = true;
+
+  return levers;
+}
+
+function renderInsights(d) {
+  const items = generateInsights(d);
+  const grid = document.getElementById('insights-grid');
+  if (!grid) return;
+  if (items.length === 0) {
+    grid.innerHTML = '<div style="font-size:11px;color:var(--c-dim);font-style:italic;padding:14px">Nenhum insight gerado para o cenário atual.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(i => `
+    <div class="insight-card ${i.sev}">
+      <div class="insight-head"><span class="insight-icon">${i.icon}</span>${i.title}</div>
+      <div class="insight-body">${i.body}</div>
+      ${i.action ? `<div class="insight-action">${i.action}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderLevers(d) {
+  const items = generateLevers(d);
+  const grid = document.getElementById('levers-grid');
+  if (!grid) return;
+  if (items.length === 0) {
+    grid.innerHTML = '<div style="font-size:11px;color:var(--c-dim);font-style:italic;padding:14px">Sem dados suficientes para simular alavancas.</div>';
+    return;
+  }
+  const baseStr = isFinite(d.trueMarginPct) ? `${d.trueMarginPct.toFixed(1)}%` : 'N/A';
+  grid.innerHTML = items.map(l => {
+    const newStr = isFinite(l.newPct) ? `${l.newPct.toFixed(1)}%` : 'N/A';
+    const gainCls = !isFinite(l.gain) ? 'flat' : (l.gain >= 0.05 ? 'up' : (l.gain <= -0.05 ? 'down' : 'flat'));
+    const gainStr = !isFinite(l.gain) ? 'N/A' : `${l.gain >= 0 ? '+' : ''}${l.gain.toFixed(1)} pp`;
+    return `
+      <div class="lever-card${l.dominant ? ' dominant' : ''}">
+        ${l.dominant ? '<span class="lever-star">★</span>' : ''}
+        <div class="lever-name">${l.name}</div>
+        <div class="lever-detail">${l.detail}</div>
+        <div class="lever-flow">${baseStr}<span class="lever-arrow">→</span><span class="lever-flow-new">${newStr}</span></div>
+        <div class="lever-gain ${gainCls}">${gainStr}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════
    MAIN CALC
 ═══════════════════════════════════════════════════════════ */
 let chart = null;
 
 function calc(){
-  const { fob, ops, price, units, sales, fba, ppc, traffic, fixed } = S;
+  const { fob, ops, price, units, sales, fba, ppc, traffic, fixed, targetMargin } = S;
 
   // Core financials
   const totalInvested   = fob + ops;
@@ -592,6 +1028,37 @@ function calc(){
   const stockDuration   = sales > 0 ? units / sales : Infinity;
   const breakEvenMonths = profitMonth > 0 ? totalInvested / profitMonth : Infinity;
   const acosPct         = revenueMonth > 0 ? (ppc / revenueMonth) * 100 : 0;
+
+  // ── NOVO: Cálculo de preço ideal (markup reverso COMPLETO) ──
+  // Inclui custos mensais (PPC + tráfego + fixas) rateados pelas vendas mensais.
+  // Custo mensal por unidade (CMU):
+  const monthlyCostPerUnit = sales > 0 ? totalMonthlyCosts / sales : Infinity;
+
+  // Margem Real por Unidade (TODOS os custos, incluindo mensais rateados):
+  // Esta é a métrica que reciproca exatamente com o Preço Ideal calculado abaixo.
+  const trueMarginUnit = price - cpuLanded - amzFee - fba - monthlyCostPerUnit;
+  const trueMarginPct  = price > 0 && isFinite(monthlyCostPerUnit) ? (trueMarginUnit / price) * 100 : NaN;
+
+  // Fórmula derivada de: trueMargin / P = M
+  // (P - cpuLanded - 0.15*P - fba - CMU) / P = M
+  // P * (0.85 - M) = cpuLanded + fba + CMU
+  // P = (cpuLanded + fba + CMU) / (0.85 - M)
+  // Domínio válido: M < 0.85 e CMU finito (sales > 0)
+  const targetMarginDec = targetMargin / 100;
+  let idealPrice = null;
+  let idealPriceValid = true;
+  let idealPriceReason = '';
+  if (targetMarginDec >= 0.85) {
+    idealPriceValid = false;
+    idealPriceReason = 'margem alvo acima do teto (85%)';
+  } else if (!isFinite(monthlyCostPerUnit)) {
+    idealPriceValid = false;
+    idealPriceReason = 'sem vendas mensais para ratear custos';
+  } else {
+    idealPrice = (cpuLanded + fba + monthlyCostPerUnit) / (0.85 - targetMarginDec);
+  }
+  // Delta vs preço atual (para subtítulo do card)
+  const priceDelta = idealPrice !== null ? (idealPrice - price) : null;
 
   // Breakeven week in chart
   const td = totalDays();
@@ -622,6 +1089,9 @@ function calc(){
   if(isFinite(breakEvenMonths) && isFinite(stockDuration) && breakEvenMonths >= stockDuration * 0.85){
     alerts.push({ type:'crit', icon:'🚨', text:`Risco crítico de caixa: break-even (${breakEvenMonths.toFixed(1)} meses) próximo ou superior à duração do estoque (${stockDuration.toFixed(1)} meses). Capital insuficiente para reposição.` });
   }
+  if(!idealPriceValid){
+    alerts.push({ type:'warn', icon:'⚠', text:`Preço ideal não calculável: ${idealPriceReason}. Ajuste a margem alvo ou as vendas estimadas.` });
+  }
   if(alerts.length === 0){
     alerts.push({ type:'ok', icon:'✓', text:`Margem de ${marginPct.toFixed(1)}%, lucro real ${fmtMoney(profitMonth)}/mês e break-even em ${isFinite(breakEvenMonths)?breakEvenMonths.toFixed(1):'—'} meses. Cenário dentro dos parâmetros saudáveis.` });
   }
@@ -630,12 +1100,42 @@ function calc(){
   ).join('');
 
   // ── Metrics
+  // Subtítulo do card de preço ideal: indica delta vs. preço manual atual
+  let idealSub = `Para atingir ${targetMargin}% líq./un. (todos os custos)`;
+  if (idealPrice !== null) {
+    const deltaAbs = Math.abs(priceDelta);
+    if (deltaAbs < 0.01) {
+      idealSub = `≈ preço atual (${fmtMoney(price)}) ✓`;
+    } else if (priceDelta > 0) {
+      idealSub = `+${fmtMoney(deltaAbs)} acima do preço atual`;
+    } else {
+      idealSub = `−${fmtMoney(deltaAbs)} abaixo do preço atual`;
+    }
+  }
+
+  // Subtítulo da margem real
+  const trueMarginSub = isFinite(monthlyCostPerUnit)
+    ? `Após Amazon, FBA e ${fmtMoney(monthlyCostPerUnit)}/un. de custos mensais`
+    : `Sem vendas para ratear custos mensais`;
+  const trueMarginVal = isFinite(monthlyCostPerUnit)
+    ? `${fmtMoney(trueMarginUnit)} (${trueMarginPct.toFixed(1)}%)`
+    : 'N/A';
+  const trueMarginCls = !isFinite(monthlyCostPerUnit) ? 'neg'
+    : trueMarginPct >= targetMargin ? 'pos'
+    : trueMarginPct >= targetMargin * 0.6 ? 'warn'
+    : 'neg';
+
   const mdata = [
     { label:'Investimento total landed',    val:fmtMoney(totalInvested),         cls:'neg',  sub:`FOB + Operacional` },
     { label:'Custo por unidade (landed)',   val:fmtMoney(cpuLanded),             cls:'neu',  sub:`${units.toLocaleString()} un.` },
-    { label:'Margem líq. / unidade',        val:`${fmtMoney(marginUnit)} (${marginPct.toFixed(1)}%)`, cls:marginPct>=25?'pos':marginPct>=15?'warn':'neg', sub:`Após fees Amazon + FBA` },
+    { label:'Margem líq. / unidade',        val:`${fmtMoney(marginUnit)} (${marginPct.toFixed(1)}%)`, cls:marginPct>=25?'pos':marginPct>=15?'warn':'neg', sub:`Após fees Amazon + FBA (sem mensais)` },
+    // ── NOVO: Margem REAL (com custos mensais rateados) ──
+    { label:'Margem líq. REAL / un.',       val: trueMarginVal,                  cls: trueMarginCls, sub: trueMarginSub },
+    // ── Card de preço ideal ──
+    { label:`Preço ideal p/ margem alvo`,   val: idealPriceValid ? fmtMoney(idealPrice) : 'N/A', cls:'blu', sub: idealSub, featured: true },
     { label:'Comissão Amazon (referral)',   val:fmtMoney(amzFee),                cls:'neu',  sub:`15% sobre $${price.toFixed(2)}` },
     { label:'Taxa FBA / unidade',           val:fmtMoney(fba),                   cls:'neu',  sub:`Fulfillment fee` },
+    { label:'Custo mensal / unidade',       val: isFinite(monthlyCostPerUnit) ? fmtMoney(monthlyCostPerUnit) : 'N/A', cls:'warn', sub:`${fmtMoney(totalMonthlyCosts)} ÷ ${sales} un./mês` },
     { label:'Receita mensal estimada',      val:fmtMoney(revenueMonth),          cls:'pos',  sub:`${sales} un. × $${price.toFixed(2)}` },
     { label:'Lucro bruto mensal',           val:fmtMoney(profitGross),           cls:profitGross>0?'pos':'neg', sub:`Antes dos custos mensais` },
     { label:'Amazon PPC',                   val:fmtMoney(ppc),                   cls:'warn', sub:`ACoS ${acosPct.toFixed(1)}% da receita` },
@@ -650,8 +1150,8 @@ function calc(){
     { label:'1ª reposição necessária em',   val:isFinite(stockDuration)?`mês ${Math.max(1,Math.round(stockDuration*0.8))}`:'—', cls:'warn', sub:`Antes de zerar estoque` },
   ];
   const mcard = (m, i) => {
-    const cmap = {pos:'pos',neg:'neg',warn:'warn',blu:'blu',neu:''};
-    return `<div class="metric-card ${m.cls}" style="animation-delay:${i*0.03}s">
+    const featuredCls = m.featured ? ' featured' : '';
+    return `<div class="metric-card ${m.cls}${featuredCls}" style="animation-delay:${i*0.03}s">
       <div class="m-label">${m.label}</div>
       <div class="m-value ${m.cls}">${m.val}</div>
       ${m.sub?`<div class="m-sub">${m.sub}</div>`:''}
@@ -664,6 +1164,18 @@ function calc(){
 
   // ── Chart
   drawChart(totalInvested, profitMonth, sales, td);
+
+  // ── Insights & Levers (rule-based engine)
+  const computed = {
+    ...S,
+    cpuLanded, amzFee, marginUnit, marginPct,
+    monthlyCostPerUnit, trueMarginUnit, trueMarginPct,
+    totalMonthlyCosts, profitGross, profitMonth,
+    breakEvenMonths, stockDuration, acosPct,
+    idealPrice, idealPriceValid, totalInvested
+  };
+  renderInsights(computed);
+  renderLevers(computed);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -778,7 +1290,7 @@ function drawChart(totalInv, profitMonthNet, sales, td){
    PROMPT BUTTONS
 ═══════════════════════════════════════════════════════════ */
 function buildContext(){
-  const { fob, ops, price, units, sales, fba, ppc, traffic, fixed } = S;
+  const { fob, ops, price, units, sales, fba, ppc, traffic, fixed, targetMargin } = S;
   const totalInv       = fob + ops;
   const cpu            = totalInv / units;
   const amzFee         = price * 0.15;
@@ -789,8 +1301,17 @@ function buildContext(){
   const profitNet      = profitGross - totalMonthly;
   const acos           = sales*price > 0 ? ((ppc/(sales*price))*100).toFixed(1) : '0.0';
   const td             = totalDays();
+  const tmDec          = targetMargin / 100;
+  const cmu            = sales > 0 ? totalMonthly / sales : Infinity;
+  const trueMargin     = price - cpu - amzFee - fba - cmu;
+  const trueMarginPct  = isFinite(cmu) ? ((trueMargin/price)*100).toFixed(1) : 'N/A';
+  let idealStr;
+  if (tmDec >= 0.85) idealStr = 'N/A (margem alvo acima do teto de 85%)';
+  else if (!isFinite(cmu)) idealStr = 'N/A (sem vendas para ratear custos)';
+  else idealStr = fmtMoney((cpu + fba + cmu) / (0.85 - tmDec));
+
   return `Projeto: importação de electric shaver da China para Amazon EUA.
-Empresa: G2 Technology and Business, LLC | Logística: Red Stag Fulfillment
+Empresa: G2 Technology and Business, LLC | Logística: Fulfillment center
 
 ── INVESTIMENTO (ONE-TIME) ─────────────────────
 Custo FOB China:            ${fmtMoney(fob)}
@@ -803,7 +1324,11 @@ Custo por unidade (landed): ${fmtMoney(cpu)}
 Preço de venda Amazon:      ${fmtMoney(price)} / unidade
 Comissão Amazon (15%):      ${fmtMoney(amzFee)}
 Taxa FBA:                   ${fmtMoney(fba)} / unidade
-Margem líq. por unidade:    ${fmtMoney(margin)} (${marginPct}%)
+Custo mensal/un. (rateado): ${isFinite(cmu) ? fmtMoney(cmu) : 'N/A'}
+Margem bruta unitária:      ${fmtMoney(margin)} (${marginPct}%) — sem custos mensais
+Margem líq. REAL/un.:       ${isFinite(cmu) ? fmtMoney(trueMargin) : 'N/A'} (${trueMarginPct}%) — todos os custos
+Margem líquida alvo:        ${targetMargin}%
+Preço ideal p/ margem alvo: ${idealStr}
 Vendas mensais estimadas:   ${sales} un./mês
 Receita mensal:             ${fmtMoney(sales*price)}
 Lucro bruto mensal:         ${fmtMoney(profitGross)}
